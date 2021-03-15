@@ -1,0 +1,50 @@
+                                                                              Shopping  Project
+                                                                              
+  1 Customer db olusturulup alanları asagıdaki gb olmalıdır
+  create table customers(
+    customer_id serial primary key ,
+    citizen_number char(11) unique not null,
+    first_name varchar(100) not null ,
+    middle_name varchar(100),
+    family_name  varchar(100) not null ,
+    phone char(14) not null
+
+);
+örnek bir insert 
+insert into customers(citizen_number, first_name, middle_name, family_name, phone) VALUES ('12345678910','Ali3','veli3','sahin3','+905526760201');
+
+2 orders tablosu
+
+create table orders (
+    order_id  bigserial primary key ,
+    customer_id integer references customers(customer_id),
+    product_code char(7) references products(product_code),
+    quantity int check ( quantity>0 ) default (1) not null ,
+    unit_price money not null
+);
+
+3  products tablosu
+
+create table products(
+    product_code char(7) primary key ,
+    name varchar(100) not null ,
+    stock int not null ,
+    cost money not null ,
+    unit_price money not null
+
+);
+
+4 tabloları olustururken dikkat ettiysek order tablosu customer tablosuyla ve products ile iliskili customer_id ve product_code alanları orders tablosunda foreign key olarak belirlendi
+
+5 yazacagımız web serviste
+
+a) butun customerları  listeleyen  -  butun ürünleri listeleyen - butun siparisleri listeleyen 
+b) product_code   parametre olarak alıp onu siparis veren customerları döndüren
+c yine product_codu parametre olarak alıp toplam siparislerdeki adeti donduren mesela mou 123 toplamda bütün musteriler toplamda 200 adet siparis vermis gb
+d toplam order tutarını parametre olarak alıp bu tutarın üstünde siparis veren customerları donduren 
+
+Bonus e ismi salih olan müsterinin verdiği siparisteki ürünlerin isimlerini ve yanında kac adet siparis verigini döndüren  web servisi yazacagız
+Not classlarımızı(Entity) yukardaki tablolardaki alanlara uygun olusturup product projesine ekleyerek devam edebilirsiniz
+
+
+
